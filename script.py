@@ -6,8 +6,6 @@ from torch.utils.data import random_split
 from Topic_model import *
 from utils import *
 
-# def evaluation(method):
-#     if method = 'multi_label':
 
 
 
@@ -34,8 +32,6 @@ if __name__ == '__main__':
 
     texts = texts.values.tolist()
     ldabert_Model=Topic(texts, common_texts, class_name, method='LDA_BERT', k=3)
-    # vec1 = ldabert_Model.vectorize(method='LDA')
-    # vec2 = ldabert_Model.vectorize(method='BERT')
     vec = ldabert_Model.vectorize(method='BERT')
 
     print('shape of representation is {}'.format(vec.shape))
@@ -110,9 +106,6 @@ if __name__ == '__main__':
                 else:
                     acc += 0
 
-                # acc += sum(pred_binary == label[0]).item()/output_channels
-        #         if (pred.item() > 0.5 and label.item() == 1) or (pred.item() <= 0.5 and label.item() == 0) :
-        #             acc += 1
             print('The accuracy of validation set is: {}'.format(acc/len(valid_dataset)))
 
 
