@@ -1,6 +1,6 @@
 
 import pandas as pd
-import torch
+from evaluation import *
 import torch.optim as optim
 from torch.utils.data import random_split
 from Topic_model import *
@@ -14,9 +14,11 @@ if __name__ == '__main__':
     if class_name == 'senwave_preprocess_version3':
         output_channels = 11
         index = range(4,15)
+        criterion = nn.BCEWithLogitsLoss()
     elif class_name == 'senwave_preprocess_version2':
         output_channels = 3
         index = range(15,18)
+        criterion = nn.CrossEntropyLoss()
     else:
         print('There is no file called : {}'.format(class_name))
 
@@ -48,10 +50,10 @@ if __name__ == '__main__':
     learning_rate = 1e-3
     batch_size = 64
     num_epochs = 100
+    threshold = 0.5
 
     train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
     valid_loader = DataLoader(dataset=valid_dataset, batch_size=1, shuffle=False)
-    # data,target = next(iter(train_loader))
 
 
     # Initialize network
@@ -59,9 +61,6 @@ if __name__ == '__main__':
     model = Dense(input_channels,output_channels).to(device)
 
     # Loss and optimizer
-    # criterion = nn.BCELoss()
-    criterion = nn.CrossEntropyLoss()
-    # criterion = nn.MSELoss()
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
     # Train Network
@@ -75,7 +74,6 @@ if __name__ == '__main__':
             # Get data to cuda if possible
             data = data.to(device=device)
             targets = targets.to(device=device)
-
 
             # forward
             scores = model(data)
@@ -94,19 +92,22 @@ if __name__ == '__main__':
         model.eval()
         with torch.no_grad():
             acc = 0
+            pred_labels = []
+            actual_labels = []
             for source, label in valid_loader:
                 source = source.to(device=device)
                 pred = nn.Softmax(dim=1)(model(source))
-                count = sum(label[0])
-                _,indices = pred.topk(int(count.item()), dim=1, largest = True)
-                pred_binary = torch.FloatTensor(output_channels).fill_(0)
-                pred_binary[indices] = 1
-                if sum(pred_binary == label[0]).item() == output_channels:
-                    acc += 1
-                else:
-                    acc += 0
+                pred_labels.append(pred.cpu().numpy()[0])
+                actual_labels.append(label.cpu().numpy()[0])
 
-            print('The accuracy of validation set is: {}'.format(acc/len(valid_dataset)))
+            ham_loss, accuracy_scores, jacc_score, lrap, f1_micro, f1_macro = evaluation_metrics(actual_labels, pred_labels,threshold,output_channels)
+            print('The accuracy of validation set is: {}'.format(accuracy_scores))
+            print('The ham_loss of validation set is: {}'.format(ham_loss))
+            print('The jacc_score of validation set is: {}'.format(jacc_score))
+            print('The lrap of validation set is: {}'.format(lrap))
+            print('The f1_micro of validation set is: {}'.format(f1_micro))
+            print('The f1_macro of validation set is: {}'.format(f1_macro))
+
 
 
 
