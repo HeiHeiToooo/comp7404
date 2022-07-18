@@ -1,4 +1,3 @@
-
 import pandas as pd
 from evaluation import *
 import torch.optim as optim
@@ -6,8 +5,6 @@ from torch.utils.data import random_split
 from Topic_model import *
 from utils import *
 
-# def evaluation(method):
-#     if method = 'multi_label':
 
 
 
@@ -36,8 +33,6 @@ if __name__ == '__main__':
 
     texts = texts.values.tolist()
     ldabert_Model=Topic(texts, common_texts, class_name, method='LDA_BERT', k=3)
-    # vec1 = ldabert_Model.vectorize(method='LDA')
-    # vec2 = ldabert_Model.vectorize(method='BERT')
     vec = ldabert_Model.vectorize(method='BERT')
 
     print('shape of representation is {}'.format(vec.shape))
@@ -53,12 +48,11 @@ if __name__ == '__main__':
     #Hyperparameters
     learning_rate = 1e-3
     batch_size = 64
-    num_epochs = 30
-    threshold = 0.45
+    num_epochs = 100
+    threshold = 0.5
 
     train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
     valid_loader = DataLoader(dataset=valid_dataset, batch_size=1, shuffle=False)
-    # data,target = next(iter(train_loader))
 
 
     # Initialize network
@@ -103,36 +97,14 @@ if __name__ == '__main__':
                 source = source.to(device=device)
                 pred = nn.Softmax(dim=1)(model(source))
                 pred_labels.append(pred.cpu().numpy()[0])
-                # print(label.cpu().numpy())
                 actual_labels.append(label.cpu().numpy()[0])
 
             ham_loss, accuracy_scores, jacc_score, lrap, f1_micro, f1_macro = evaluation_metrics(actual_labels, pred_labels,threshold,output_channels)
-
-                # count = sum(label[0])
-                # _,indices = pred.topk(int(count.item()), dim=1, largest = True)
-                # pred_binary = torch.FloatTensor(output_channels).fill_(0)
-                # pred_binary[indices] = 1
-                # if sum(pred_binary == label[0]).item() == output_channels:
-                #     acc += 1
-                # else:
-                #     acc += 0
-
-                # acc += sum(pred_binary == label[0]).item()/output_channels
-        #         if (pred.item() > 0.5 and label.item() == 1) or (pred.item() <= 0.5 and label.item() == 0) :
-        #             acc += 1
             print('The accuracy of validation set is: {}'.format(accuracy_scores))
             print('The ham_loss of validation set is: {}'.format(ham_loss))
             print('The jacc_score of validation set is: {}'.format(jacc_score))
             print('The lrap of validation set is: {}'.format(lrap))
             print('The f1_micro of validation set is: {}'.format(f1_micro))
             print('The f1_macro of validation set is: {}'.format(f1_macro))
-
-
-
-
-
-
-
-
 
 
