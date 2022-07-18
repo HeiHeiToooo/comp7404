@@ -9,8 +9,12 @@ BERT is state-of-the-art natural language processing model from Google. Using it
 Long short-term memory (LSTM) is an artificial neural network used in the fields of artificial intelligence. Unlike standard feedforward neural networks, LSTM has feedback connections.
 ## Requirements and Installation 
 In order to run the code,you'll need the following libraries.
-- pytorch
-
+- torch==1.10.2
+- torchvision==0.11.3
+- numpy
+- pandas
+For Bert model we'll use the transformers library, which can be installed via:
+`pip install transformers`  
 
 
 
