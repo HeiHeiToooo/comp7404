@@ -1,13 +1,14 @@
 # comp7404 
 ## Description
 Sentiment Classification on COVID-19 based on BERT and LSTM model
-##Dataset
+## Dataset
 First, you need to prepare COVID-19 comments data which are publicly available. Format used here is one review per line, with 10000 lines.(11 labels per tweet) you can simply download dataset on comp7404/BERT/senwave_preprocess.
 ## Bert
 BERT is state-of-the-art natural language processing model from Google. Using its latent space, it can be repurpossed for various NLP tasks, such as sentiment analysis.
-###Requirements and Installation
+### Requirements and Installation
 ## LSTM
-###Requirements and Installation 
+Long short-term memory (LSTM) is an artificial neural network used in the fields of artificial intelligence. Unlike standard feedforward neural networks, LSTM has feedback connections.
+### Requirements and Installation 
 
 
 
