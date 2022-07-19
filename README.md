@@ -19,4 +19,6 @@ For Bert model we'll use the transformers library, which can be installed via:
 - > SenWave: Monitoring the Global Sentiments under the COVID-19 Pandemic, Yang, Qiang and Alamro, Hind and Albaradei, Somayah and Salhi, Adil and Lv, Xiaoting and Ma, Changsheng and Alshehri, Manal and Jaber, Inji and Tifratene, Faroug and Wang, Wei and others [https://arxiv.org/pdf/2006.10842.pdf] (Note: If you want to use the labled tweets, please mail to qiang.yang[AT]kaust[dot]edu[dot]sa to get the pwd for the zip filefolder.)
 
 - > Tweets originating from India during Covid-19 Lockdowns 1, 2, 3, 4 - [https://ieee-dataport.org/open-access/tweets-originating-india-during-covid-19-lockdowns-1-2-3-4]
-
+## Demo Vedio
+- [https://connecthkuhk-my.sharepoint.com:/g/personal/u3591502_connect_hku_hk/ETjpleDP5sdMmfqTcjIK6oABId29X6B8z1q1LxeG5MwYHw?e=gpmkQH]
+- [https://drive.google.com/file/d/19ec2FzbM8e3WLzVt0DETDdGzxSyhzcdG/view?usp=sharing]
